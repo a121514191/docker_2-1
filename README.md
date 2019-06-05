@@ -174,15 +174,35 @@ mysqldump 檔案路徑: /usr/bin/mysqldump
 
 </details>
 
+### 成功安裝完的畫面
 
-### 補充:之前常出現容器錯誤，是因為之前無論對錯，有run這個步驟
-### docker ps -a 都會多一個內容
-### 所以都查看後先用stop 再用 rm
+![](https://github.com/a121514191/docker_2-1/blob/master/localhost.PNG)
+
+### 之後再目錄下新增一個html檔案
+
+>vi index.html
+
+>裡面輸入 Hello Word!!!
+
+### 之後打開瀏覽器輸入localhost
+
+![](https://github.com/a121514191/docker_2-1/blob/master/Hello%20World!.PNG)
+
+### 成功後我們將容器 commit 成 images
+
+>docker commit 代碼 命名
+
+### 執行 images 
+
+docker run -p 80:80 -d --privileged=true 名稱 /usr/sbin/init
+
+### run產生容器(有時出錯也會產生，所以要去刪除不必要的以及重複的)
+### docker ps -a 查看容器
+### stop 之後 移除 rm
 
 ![](https://github.com/a121514191/docker_2/blob/master/ps.PNG)
 
 ![](https://github.com/a121514191/docker_2/blob/master/stop%26rm.PNG)
 
-### 之後會試著將容器環境設定好並且把他打包成image
-### 最終目的是想要客製化此image然後成功寫出dockerfile
+### 下次目標寫出dockerfile並打包成image
 
