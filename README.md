@@ -196,6 +196,7 @@ mysqldump 檔案路徑: /usr/bin/mysqldump
 
 docker run -p 80:80 -d --privileged=true 名稱 /usr/sbin/init
 
+# 補充:
 ### run產生容器(有時出錯也會產生，所以要去刪除不必要的以及重複的)
 ### docker ps -a 查看容器
 ### stop 之後 移除 rm
