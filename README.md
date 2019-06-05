@@ -39,21 +39,9 @@ reset之後便可成功下載
 
 ![](https://github.com/a121514191/docker_2/blob/master/images.PNG)
 
-### 之後我嘗試在裡面安裝http,mysql,apache,php
+### 下一步run images 並且指定 port 80:80
 
->docker run -i -t first-centos
-
->yum install httpd
-
->systemctl start httpd.service
-
-但在安裝完後httpd後
-卡在 systemctl start httpd.service 
-
-![](https://github.com/a121514191/docker_2/blob/master/systemctl.PNG)
-
-
-### 經查詢後
+### systemctl 無法使用
 
 Docker的設計理念是在容器里面不運行後台服務
 正确的使用容器方法是將里面的服务運行在前台
@@ -62,19 +50,94 @@ Docker的設計理念是在容器里面不運行後台服務
 
 創建容器
 
-> docker run -d --privileged=true first-centos /usr/sbin/init
+> docker run -p 80:80 -d --privileged=true first-centos /usr/sbin/init
 
 ![](https://github.com/a121514191/docker_2/blob/master/privil.PNG)
 
 進入容器
 
-> docker exec -it centos7 /bin/bash
+> docker exec -it name /bin/bash
 
-> systemctl start httpd.service 
+<details>
+CentOS7.6 安裝 Httpd, PHP7.3
 
-![](https://github.com/a121514191/docker_2/blob/master/exec.PNG)
+安裝 httpd
 
-沒跑出錯誤訊息代表成功
+yum install httpd
+
+systemctl start httpd.service
+systemctl enable httpd.service
+(下面防火牆要設定完才能連上網)
+
+設定防火牆
+
+firewall-cmd --add-port=80/tcp --permanent(80=web  執行完才能連到網站)
+firewall-cmd --add-port=443/tcp --permanent
+# firewall-cmd --add-port=22/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --get-default-zone
+firewall-cmd --zone=public --list-all
+firewall-cmd --zone=public --list-all --permanent
+
+
+因為 php7.3 不在 base repo 裡面, 所以要另外配置來源
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+安裝 yum 配置元件
+yum install yum-utils
+yum-config-manager --enable remi-php73
+
+安裝 php 相關元件
+yum install php php-fpm php-mysqlnd php-mysql php-opcache php-xml php-xmlrpc php-gd php-mbstring php-json
+
+全部安裝好
+systemctl restart httpd.service
+
+
+安裝 mysql 
+
+
+yum install wget
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
+sudo yum install mysql-server
+sudo systemctl start mysqld
+yum update
+
+設定密碼
+
+第一次設定root密碼(不要進mysql)
+
+[root@li1004-29 mysql]# mysqladmin -u root password
+New password: 
+Confirm new password: 
+
+重設密碼
+mysqladmin -u root -p password 'yourpassword'
+
+
+各程式目錄
+
+Apache:
+
+預設安裝目錄: /etc/httpd/
+DocumentRoot: /var/www/html/
+httpd.conf 路徑: /etc/httpd/conf/httpd.conf
+
+
+PHP:
+
+php.ini 路徑: /etc/php.ini
+PHP 模組設定檔目錄: /etc/php.d/
+PHP 模組目錄: /usr/lib64/php/modules/
+
+MySQL (MariaDB)
+
+MySQL 設定檔路徑: /etc/my.cnf
+MySQL 資料庫目錄: /var/lib/mysql/
+mysqldump 檔案路徑: /usr/bin/mysqldump<
+</details>
+
 
 ### 補充:之前常出現容器錯誤，是因為之前無論對錯，有run這個步驟
 ### docker ps -a 都會多一個內容
