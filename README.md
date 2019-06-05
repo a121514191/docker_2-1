@@ -58,7 +58,10 @@ Docker的設計理念是在容器里面不運行後台服務
 
 > docker exec -it name /bin/bash
 
-<details>
+### 成功進入容器後照著Leo給的安裝步驟依序完成
+
+<details> 
+  
 CentOS7.6 安裝 Httpd, PHP7.3
 
 安裝 httpd
@@ -66,19 +69,26 @@ CentOS7.6 安裝 Httpd, PHP7.3
 yum install httpd
 
 systemctl start httpd.service
+
 systemctl enable httpd.service
+
 (下面防火牆要設定完才能連上網)
 
 設定防火牆
 
 firewall-cmd --add-port=80/tcp --permanent(80=web  執行完才能連到網站)
-firewall-cmd --add-port=443/tcp --permanent
-# firewall-cmd --add-port=22/tcp --permanent
-firewall-cmd --reload
-firewall-cmd --get-default-zone
-firewall-cmd --zone=public --list-all
-firewall-cmd --zone=public --list-all --permanent
 
+firewall-cmd --add-port=443/tcp --permanent
+
+firewall-cmd --add-port=22/tcp --permanent
+
+firewall-cmd --reload
+
+firewall-cmd --get-default-zone
+
+firewall-cmd --zone=public --list-all
+
+firewall-cmd --zone=public --list-all --permanent
 
 因為 php7.3 不在 base repo 裡面, 所以要另外配置來源
 yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -95,7 +105,6 @@ systemctl restart httpd.service
 
 
 安裝 mysql 
-
 
 yum install wget
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
@@ -135,7 +144,8 @@ MySQL (MariaDB)
 
 MySQL 設定檔路徑: /etc/my.cnf
 MySQL 資料庫目錄: /var/lib/mysql/
-mysqldump 檔案路徑: /usr/bin/mysqldump<
+mysqldump 檔案路徑: /usr/bin/mysqldump
+
 </details>
 
 
