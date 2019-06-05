@@ -25,8 +25,6 @@ reset之後便可成功下載
 
 ![](https://github.com/a121514191/docker_2/blob/master/centos.PNG)
 
-之後可在裡面下指令
-
 ### 我想用這個當基礎來建立環境，所以我先commit他的image(自首不能大寫)
 
 ![](https://github.com/a121514191/docker_2/blob/master/lowercase.PNG)
@@ -48,7 +46,7 @@ Docker的設計理念是在容器里面不運行後台服務
 
 > 解決辦法，以特權模式運行容器
 
-創建容器
+執行並產生容器
 
 > docker run -p 80:80 -d --privileged=true first-centos /usr/sbin/init
 
