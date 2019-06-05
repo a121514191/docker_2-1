@@ -52,7 +52,7 @@ Docker的設計理念是在容器里面不運行後台服務
 
 > docker run -p 80:80 -d --privileged=true first-centos /usr/sbin/init
 
-![](https://github.com/a121514191/docker_2/blob/master/port.PNG)
+![](https://github.com/a121514191/docker_2-1/blob/master/port.PNG)
 
 進入容器
 
