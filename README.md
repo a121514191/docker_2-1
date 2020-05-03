@@ -76,6 +76,10 @@ systemctl enable httpd.service
 (下面防火牆要設定完才能連上網)
 
 設定防火牆
+yum install firewalld
+systemctl unmask firewalld
+systemctl enable firewalld
+systemctl start firewalld
 
 firewall-cmd --add-port=80/tcp --permanent(80=web  執行完才能連到網站)
 
